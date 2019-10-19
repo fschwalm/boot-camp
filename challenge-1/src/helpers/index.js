@@ -1,10 +1,13 @@
 const helpers = {
-  findProjectIndexByID(projects, id) {
-    const index = projects.findIndex(project => project.id == id);
-    if (index === -1) {
-        throw new Error("Project ID not found!");
+  getProjectByID(projects, id) {
+    const project = projects.find(project => project.id == id);
+    if (!project) {
+        throw new Error("Project not found!");
     }
-    return index;
+    return project;
+  },
+  getProjectIndexByID(projects, id) {
+    return projects.findIndex(project => project.id == id);
   }
 };
 

@@ -22,17 +22,17 @@ routes.get("/projects", (req, res) => {
 });
 
 routes.put("/projects/:id", middlewares.checkIfProjectExists, (req, res) => {
-  const { id } = req.params;
   const { title } = req.body;
+  const { project } = req;
 
-  projects[helpers.findProjectIndexByID(projects, id)].title = title;
+  project.title = title;
 
-  return res.send(projects);
+  return res.send(project);
 });
 
 routes.delete("/projects/:id", middlewares.checkIfProjectExists, (req, res) => {
   const { id } = req.params;
-  projects.splice(helpers.findProjectIndexByID(projects, id), 1);
+  projects.splice(helpers.getProjectIndexByID(projects, id), 1);
   return res.send();
 });
 
@@ -40,11 +40,10 @@ routes.post(
   "/projects/:id/tasks",
   middlewares.checkIfProjectExists,
   (req, res) => {
-    const { id } = req.params;
+    const { project } = req;
     const { title } = req.body;
 
-    const index = helpers.findProjectIndexByID(projects, id);
-    projects[index].tasks.push(title);
+    project.tasks.push(title);
 
     res.json(projects);
   }

@@ -11,7 +11,8 @@ const middlewares = {
   checkIfProjectExists(req, res, next) {
     const { id } = req.params;
     try {
-      helpers.findProjectIndexByID(projects, id);
+      const project = helpers.getProjectByID(projects, id);
+      req.project = project;
       next();
     } catch (error) {
       return res.status(400).send(error.message);
